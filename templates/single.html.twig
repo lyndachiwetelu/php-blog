@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  	<link rel="stylesheet" type="text/css" href="{{ stylesheet }}">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	
+	<title>A Blog</title>
+</head>
+<body>
+<div class="container pt-3">
+  <h1>Welcome to The Lorem Ipsum Blog</h1>
+  <p class="description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p>
+  <div class="post">
+  	<span class="post-title"><p>{{post.title}}</p></span>
+  	<p class="post"> {{post.content}} </p>
+  	
+  </div>
+  <h3>COMMENTS</h3>
+  <div id="comments">
+  	{% for comment in comments %}
+  	<div class="comment-box">
+  		<img src="http://blog.localhost/img/maleAvatar.png"/>
+  		<p class="username">{{comment.user.name}}</p>
+  		<p class="comment">{{comment.content}}</p>
+  	</div>
+  	{% endfor %}
+  	
+  </div>
+  <h3>ADD A COMMENT</h3>
+  <form method="post" action="/post/{{post.id}}/addcomment">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputUsername">Username</label>
+    <input type="text" class="form-control" id="exampleInputUsername" placeholder="Enter Username" name="username">
+  </div>
+  <div class="form-group">
+  <label for="comment">Comment:</label>
+  <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+ </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  
+</div>
+
+</body>
+</html>
