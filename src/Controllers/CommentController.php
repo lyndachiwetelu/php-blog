@@ -14,7 +14,7 @@ class CommentController
 		self::$repository = new CommentRepository;
 	}
 
-	public static function addComment($vars=[])
+	public function addComment($vars=[])
 	{
 		$username = $_POST['username'];
 		$email = $_POST['email'];

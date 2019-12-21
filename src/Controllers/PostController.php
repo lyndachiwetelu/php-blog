@@ -14,7 +14,7 @@ class PostController
 		self::$repository = new PostRepository;
 	}
 
-	public static function addPost($vars=[])
+	public function addPost($vars=[])
 	{
 		$title = $_POST['title'] ?? '';
 		$content = $_POST['content'] ?? '';
