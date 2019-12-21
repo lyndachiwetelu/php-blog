@@ -10,7 +10,7 @@ class PostRepository
 {
 	public function getPosts() : array
 	{
-		$posts = Post::all();
+		$posts = Post::whereNotNull('id')->orderBy('created_at', 'desc')->get();
 		$data = [];
 		foreach ($posts as $post) {
 			$comment_count = $post->comments->count();
