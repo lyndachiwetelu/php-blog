@@ -13,9 +13,9 @@ class PostRepository
 		$posts = Post::whereNotNull('id')->orderBy('created_at', 'desc')->get();
 		$data = [];
 		foreach ($posts as $post) {
-			$comment_count = $post->comments->count();
+			$commentCount = $post->comments->count();
 			$post = $post->toArray();
-			$post['comment_count'] = $comment_count;
+			$post['comment_count'] = $commentCount;
 			$data[] = $post;
 		}
 		return $data;
