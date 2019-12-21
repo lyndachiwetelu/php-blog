@@ -40,7 +40,8 @@ switch ($routeInfo[0]) {
        	$method = $controller[1];
 
        	$classname = "App\Controllers\\".$class;
-       	$classname::$method($vars);
+       	$class = new $classname;
+       	$class->$method($vars);
        
         break;
 }

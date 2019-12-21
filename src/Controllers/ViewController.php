@@ -23,7 +23,7 @@ class ViewController
 		self::$postRepository = new PostRepository;
 	}
 
-	public static function list($vars=[])
+	public function list($vars=[])
 	{
 		self::setLoader();
 		self::setRepository();
@@ -31,7 +31,7 @@ class ViewController
 		echo self::$twig->render('list.html.twig', ['posts' => $posts]);
 	}
 
-	public static function singlePost($vars=[])
+	public function singlePost($vars=[])
 	{
 		$postId = $vars['postId'] ?? '';
 		self::setLoader();
@@ -41,7 +41,7 @@ class ViewController
 
 	}
 
-	public static function admin($vars=[])
+	public function admin($vars=[])
 	{
 		self::setLoader();
 		$notification = (isset($_GET['postAdded']) && $_GET['postAdded'] === 'true')  ? 'Post Added!' : '';
