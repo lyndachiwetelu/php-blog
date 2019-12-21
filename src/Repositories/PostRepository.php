@@ -10,8 +10,15 @@ class PostRepository
 {
 	public function getPosts() : array
 	{
-		$posts = Post::all()->toArray();
-		return $posts;
+		$posts = Post::all();
+		$data = [];
+		foreach ($posts as $post) {
+			$comment_count = $post->comments->count();
+			$post = $post->toArray();
+			$post['comment_count'] = $comment_count;
+			$data[] = $post;
+		}
+		return $data;
 	}
 
 	public function addPost($title, $content) : array

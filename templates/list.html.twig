@@ -21,7 +21,7 @@
   	<span class="post-title"><p>{{post.title}}</p></span>
   	<p class="post">{{post.content}}... </p>
   	<a href="/post/{{post.id}}">See More</a>
-  	<a href="/templates/single.html#comments"><p>25 comments</p></a>
+  	<a href="/post/{{post.id}}#comments"><p>{{post.comment_count}} comments</p></a>
   </div>
   {% endfor %}
   
