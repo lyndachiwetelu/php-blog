@@ -7,19 +7,18 @@ use App\Repositories\PostRepository;
 
 class PostController
 {
-	protected static $repository;
+	protected $repository;
 
-	private static function setRepository()
+	public function __construct(PostRepository $postRepository)
 	{
-		self::$repository = new PostRepository;
+		$this->repository = $postRepository;
 	}
 
 	public function addPost($vars=[])
 	{
 		$title = $_POST['title'] ?? '';
 		$content = $_POST['content'] ?? '';
-		self::setRepository();
-		$post = self::$repository->addPost($title, $content);
+		$post = $this->repository->addPost($title, $content);
 		header('Location: ' . APP_URL.'admin?postAdded=true');
 	}
 }

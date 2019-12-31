@@ -7,21 +7,19 @@ use App\Repositories\CommentRepository;
 
 class CommentController
 {
-	protected static $repository;
+	protected $repository;
 
-	private static function setRepository()
+	public function __construct(CommentRepository $commentRepository)
 	{
-		self::$repository = new CommentRepository;
+		$this->repository = $commentRepository;
 	}
 
-	public function addComment($vars=[])
+	public function addComment($postId)
 	{
 		$username = $_POST['username'];
 		$email = $_POST['email'];
 		$comment = $_POST['comment'];
-		$postId = $vars['postId'];
-		self::setRepository();
-		$commentWithUser = self::$repository->addComment($username, $email, $comment, $postId);
+		$commentWithUser = $this->repository->addComment($username, $email, $comment, $postId);
 		header('Location: '.APP_URL."post/$postId");
 	}
 

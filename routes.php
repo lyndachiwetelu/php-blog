@@ -2,12 +2,11 @@
 
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-    $r->get('/', 'ViewController@list');
-    $r->get('/admin', 'ViewController@admin');
-    $r->get('/post/{postId:\d+}', 'ViewController@singlePost');
-    $r->post('/addpost', 'PostController@addPost');
-    $r->post('/post/{postId:\d+}/addcomment', 'CommentController@addComment');
-
+    $r->get('/', 'App\Controllers\ViewController@list');
+    $r->get('/admin', 'App\Controllers\ViewController@admin');
+    $r->get('/post/{postId:\d+}', 'App\Controllers\ViewController@singlePost');
+    $r->post('/addpost', 'App\Controllers\PostController@addPost');
+    $r->post('/post/{postId:\d+}/addcomment', 'App\Controllers\CommentController@addComment');
 });
 
 // Fetch method and URI from somewhere
@@ -36,12 +35,14 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
 
         $controller = explode('@', $handler);
-       	$class = $controller[0];
+       	$controllerClass = $controller[0];
        	$method = $controller[1];
 
-       	$classname = "App\Controllers\\".$class;
-       	$class = new $classname;
-       	$class->$method($vars);
+        $container->call([$controllerClass, $method], $vars);
+
+       	// $classname = "App\Controllers\\".$class;
+       	// $class = new $classname;
+       	// $class->$method($vars);
        
         break;
 }

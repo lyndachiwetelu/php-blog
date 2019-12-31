@@ -2,49 +2,38 @@
 
 namespace App\Controllers;
 
-use Twig\Environment;
+use Twig\Environment as TwigEnvironment;
 use Twig\Loader\FilesystemLoader;
 use App\Repositories\PostRepository;
 
 class ViewController
 {
-	protected static $twig;
-	protected static $postRepository;
+	protected $twig;
+	protected $postRepository;
 
-	private static function setLoader()
+	public function __construct(PostRepository $postRepository, TwigEnvironment $twig)
 	{
-		$loader = new FilesystemLoader(BASE_DIR. '/templates');
-        self::$twig = new Environment($loader);
-        self::$twig->addGlobal('stylesheet', APP_URL.'/templates/styles/style.css');
+		$this->postRepository = $postRepository;
+		$this->twig = $twig;
+		$this->twig->addGlobal('stylesheet', APP_URL.'/src/Views/styles/style.css');
 	}
 
-	private static function setRepository()
+	public function list()
 	{
-		self::$postRepository = new PostRepository;
+		$posts = $this->postRepository->getPosts();
+		echo $this->twig->render('list.html.twig', ['posts' => $posts]);
 	}
 
-	public function list($vars=[])
+	public function singlePost($postId)
 	{
-		self::setLoader();
-		self::setRepository();
-		$posts = self::$postRepository->getPosts();
-		echo self::$twig->render('list.html.twig', ['posts' => $posts]);
-	}
-
-	public function singlePost($vars=[])
-	{
-		$postId = $vars['postId'] ?? '';
-		self::setLoader();
-		self::setRepository();
-		$postWithComments = self::$postRepository->getSinglePostWithComments($postId);
-		echo self::$twig->render('single.html.twig', ['post' => $postWithComments['post'], 'comments' => $postWithComments['comments']]);
+		$postWithComments = $this->postRepository->getSinglePostWithComments($postId);
+		echo $this->twig->render('single.html.twig', ['post' => $postWithComments['post'], 'comments' => $postWithComments['comments']]);
 
 	}
 
-	public function admin($vars=[])
+	public function admin()
 	{
-		self::setLoader();
 		$notification = (isset($_GET['postAdded']) && $_GET['postAdded'] === 'true')  ? 'Post Added!' : '';
-		echo self::$twig->render('/admin/post.html.twig', ['notification' => $notification]);
+		echo $this->twig->render('/admin/post.html.twig', ['notification' => $notification]);
 	}
 }
