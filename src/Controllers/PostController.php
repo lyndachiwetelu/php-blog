@@ -14,7 +14,7 @@ class PostController
 		$this->repository = $postRepository;
 	}
 
-	public function addPost($vars=[])
+	public function addPost()
 	{
 		$title = $_POST['title'] ?? '';
 		$content = $_POST['content'] ?? '';
