@@ -48,4 +48,10 @@ class PostRepository
 		$saved = $post->save();
 		return $saved;
 	}
+
+	public function deletePost($postId) : Int
+	{
+		$deleted = Post::destroy($postId);
+		return $deleted;
+	}
 }

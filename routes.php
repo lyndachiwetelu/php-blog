@@ -6,7 +6,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get('/admin', 'App\Controllers\PostController@adminAddPost');
     $r->get('/admin/posts', 'App\Controllers\PostController@adminViewPosts');
     $r->get('/admin/post/{postId:\d+}/edit', 'App\Controllers\PostController@editPost');
-    $r->get('/admin/post/{postId:\d+}/delete', 'App\Controllers\PostController@deletePost');
+    $r->get('/admin/post/{postId:\d+}/delete', 'App\Controllers\PostController@deletePostConfirm');
+    $r->get('/admin/post/{postId:\d+}/remove', 'App\Controllers\PostController@deletePost');
     $r->get('/post/{postId:\d+}', 'App\Controllers\PostController@singlePost');
     $r->post('/addpost', 'App\Controllers\PostController@addPost');
     $r->post('/post/{postId:\d+}/addcomment', 'App\Controllers\CommentController@addComment');

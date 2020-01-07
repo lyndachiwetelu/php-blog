@@ -38,8 +38,9 @@ class PostController
 
 	public function adminViewPosts()
 	{
+		$notification = (isset($_GET['postDeleted']) && $_GET['postDeleted'] === 'true')  ? 'Post Deleted!' : '';
 		$posts = $this->repository->getPosts();
-		echo $this->twig->render('/admin/allposts.html', ['posts' => $posts]);
+		echo $this->twig->render('/admin/allposts.html', ['posts' => $posts, 'notification' => $notification]);
 	}
 
 	public function addPost()
@@ -61,8 +62,15 @@ class PostController
 		echo $this->twig->render('/admin/post.html.twig', ['post' => $post, 'action' => 'EDIT']);
 	}
 
+	public function deletePostConfirm($postId)
+	{
+		$post = $this->repository->getSinglePost($postId);
+		echo $this->twig->render('/admin/confirm.html', ['post' => $post]);
+	}
+
 	public function deletePost($postId)
 	{
-
+		$this->repository->deletePost($postId);
+		header('Location: ' . APP_URL.'admin/posts?postDeleted=true');
 	}
 }
