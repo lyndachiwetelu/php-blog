@@ -2,9 +2,12 @@
 
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-    $r->get('/', 'App\Controllers\ViewController@list');
-    $r->get('/admin', 'App\Controllers\ViewController@admin');
-    $r->get('/post/{postId:\d+}', 'App\Controllers\ViewController@singlePost');
+    $r->get('/', 'App\Controllers\PostController@list');
+    $r->get('/admin', 'App\Controllers\PostController@adminAddPost');
+    $r->get('/admin/posts', 'App\Controllers\PostController@adminViewPosts');
+    $r->get('/admin/post/{postId:\d+}/edit', 'App\Controllers\PostController@editPost');
+    $r->get('/admin/post/{postId:\d+}/delete', 'App\Controllers\PostController@deletePost');
+    $r->get('/post/{postId:\d+}', 'App\Controllers\PostController@singlePost');
     $r->post('/addpost', 'App\Controllers\PostController@addPost');
     $r->post('/post/{postId:\d+}/addcomment', 'App\Controllers\CommentController@addComment');
 });
@@ -39,10 +42,6 @@ switch ($routeInfo[0]) {
        	$method = $controller[1];
 
         $container->call([$controllerClass, $method], $vars);
-
-       	// $classname = "App\Controllers\\".$class;
-       	// $class = new $classname;
-       	// $class->$method($vars);
        
         break;
 }

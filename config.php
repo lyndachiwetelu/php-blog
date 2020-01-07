@@ -8,6 +8,8 @@ return [
     // Configure Twig
     Environment::class => function () {
         $loader = new FilesystemLoader(__DIR__ . '/src/Views');
-        return new Environment($loader);
+        $twig = new Environment($loader);
+        $twig->addGlobal('stylesheet', APP_URL.'/src/Views/styles/style.css');
+        return $twig;
     },
 ];

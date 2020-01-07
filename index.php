@@ -7,5 +7,5 @@ require_once 'settings.php';
 use App\Services\Database;
 new Database;
 
-require_once 'bootstrap.php';
+$container = require_once 'bootstrap.php';
 require_once 'routes.php';

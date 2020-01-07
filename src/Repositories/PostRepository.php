@@ -33,4 +33,19 @@ class PostRepository
 		$comments = Comment::with('user')->where('post_id', $postId)->get();
 		return ['post' => $post->toArray(), 'comments' => $comments->toArray()];
 	}
+
+	public function getSinglePost($postId) : array
+	{
+		$post = Post::find($postId);
+		return $post->toArray();
+	}
+
+	public function editPost($postId, $title, $content) : bool
+	{
+		$post = Post::find($postId);
+		$post->title = $title;
+		$post->content = $content;
+		$saved = $post->save();
+		return $saved;
+	}
 }

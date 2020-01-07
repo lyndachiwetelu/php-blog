@@ -18,15 +18,16 @@
   <h1>ADMIN: Welcome to The Lorem Ipsum Blog</h1>
   <p class="description">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p>
 
-  <h3>ADD A POST</h3>
+  <h3>{{action}} A POST</h3>
   <form method="post" action="/addpost">
   <div class="form-group">
     <label for="exampleInputUsername">Title</label>
-    <input type="text" class="form-control" placeholder="Enter Post Title" name="title">
+    <input type="text" class="form-control" placeholder="Enter Post Title" name="title" value="{{post.title}}">
+    <input type="hidden" name="postId" value="{{post.id}}">
   </div>
   <div class="form-group">
   <label for="comment">Post:</label>
-  <textarea class="form-control" rows="7" name="content"></textarea>
+  <textarea class="form-control" rows="7" name="content">{{post.content}}</textarea>
  </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
