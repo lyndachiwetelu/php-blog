@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Repositories\PostRepository;
 use Twig\Environment as TwigEnvironment;
+use App\Helpers\Request;
 
 class PostController
 {
@@ -30,24 +31,26 @@ class PostController
 
 	}
 
-	public function adminAddPost()
+	public function adminAddPost(Request $request)
 	{
-		$notification = (isset($_GET['postAdded']) && $_GET['postAdded'] === 'true')  ? 'Post Added!' : '';
+		$postAdded = $request->get('postAdded') ?? false;
+		$notification = ($postAdded === 'true')  ? 'Post Added!' : '';
 		echo $this->twig->render('/admin/post.html.twig', ['notification' => $notification, 'action' => 'ADD']);
 	}
 
-	public function adminViewPosts()
+	public function adminViewPosts(Request $request)
 	{
-		$notification = (isset($_GET['postDeleted']) && $_GET['postDeleted'] === 'true')  ? 'Post Deleted!' : '';
+		$postDeleted = $request->get('postDeleted') ?? false;
+		$notification = ($postDeleted === 'true')  ? 'Post Deleted!' : '';
 		$posts = $this->repository->getPosts();
 		echo $this->twig->render('/admin/allposts.html', ['posts' => $posts, 'notification' => $notification]);
 	}
 
-	public function addPost()
+	public function addPost(Request $request)
 	{
-		$title = $_POST['title'] ?? '';
-		$content = $_POST['content'] ?? '';
-		$postId = $_POST['postId'] ?? '';
+		$title = $request->get('title') ?? '';
+		$content = $request->get('content') ?? '';
+		$postId = $request->get('postId') ?? '';
 		if ($postId) {
 			$this->repository->editPost($postId, $title, $content);
 		} else {

@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-
 namespace App\Controllers;
 
 use App\Repositories\CommentRepository;
@@ -14,11 +13,11 @@ class CommentController
 		$this->repository = $commentRepository;
 	}
 
-	public function addComment($postId)
+	public function addComment($postId, $request)
 	{
-		$username = $_POST['username'];
-		$email = $_POST['email'];
-		$comment = $_POST['comment'];
+		$username = $request->get('username'); 
+		$email = $request->get('email');
+		$comment = $request->get('comment');
 		$commentWithUser = $this->repository->addComment($username, $email, $comment, $postId);
 		header('Location: '.APP_URL."post/$postId");
 	}

@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+use App\Helpers\Request;
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->get('/', 'App\Controllers\PostController@list');
@@ -37,6 +38,9 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
+
+        $request = new Request($_REQUEST);
+        $vars['request'] = $request;
 
         $controller = explode('@', $handler);
        	$controllerClass = $controller[0];
